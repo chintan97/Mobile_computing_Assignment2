@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">My City Weather</string>
     <string name="show_city_tag">Enter city name</string>
-    <string name="btn_fetch">Fetch weather</string>
+    <string name="btn_fetch">Search weather</string>
 </resources>
