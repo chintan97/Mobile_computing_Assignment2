@@ -40,6 +40,21 @@
         android:background="@color/colorPrimary"/>
 
     <LinearLayout
+        android:id="@+id/layout_show_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/show_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:text="City not found"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/show_data_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
