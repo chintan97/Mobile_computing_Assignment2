@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
     private Runnable runnable;
     String city_name, main_weather, weather_description;
     private double current_temperature, min_temperature, max_temperature, humidity, cloud_coverage;
+    private LinearLayout show_data_layout;
+    private TextView show_city_name, show_main_temp, show_min_temp, show_max_temp,
+            show_main_weather, show_description, show_humidity, show_cloud;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +50,16 @@ public class MainActivity extends AppCompatActivity {
         get_city = findViewById(R.id.get_city_name);
         fetch_data = findViewById(R.id.fetch_button);
         weatherItems = new ArrayList<>();
+        show_city_name = findViewById(R.id.show_city_name);
+        show_main_temp = findViewById(R.id.show_main_temp);
+        show_min_temp = findViewById(R.id.show_min_temp);
+        show_max_temp = findViewById(R.id.show_max_temp);
+        show_main_weather = findViewById(R.id.show_main_weather);
+        show_description = findViewById(R.id.show_description);
+        show_humidity = findViewById(R.id.show_humidity);
+        show_cloud = findViewById(R.id.show_cloud);
+        show_data_layout = findViewById(R.id.show_data_layout);
+        show_data_layout.setVisibility(View.INVISIBLE);
 
         fetch_data.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,6 +124,21 @@ public class MainActivity extends AppCompatActivity {
 
                             weatherItems.add(model);
 
+                            String show_temp = String.format("%.2f", model.getCurrent_temperature() - 273.15) + (char) 0x00B0 + "C";
+                            String min_temp = String.format("%.2f", model.getMin_temperature() - 273.15) + (char) 0x00B0 + "C";
+                            String max_temp = String.format("%.2f", model.getMax_temperature() - 273.15) + (char) 0x00B0 + "C";
+                            String humidity_string = String.valueOf(model.getHumidity()) + "%";
+                            String cloud_string = String.valueOf(model.getCloud_coverage()) + "%";
+                            show_city_name.setText(model.getCity_name());
+                            show_main_temp.setText(show_temp);
+                            show_min_temp.setText(min_temp);
+                            show_max_temp.setText(max_temp);
+                            show_main_weather.setText(model.getMain_weather());
+                            show_description.setText(model.getWeather_description());
+                            show_humidity.setText(humidity_string);
+                            show_cloud.setText(cloud_string);
+
+                            show_data_layout.setVisibility(View.VISIBLE);
                             Log.i("city name", model.getWeather_description());
 
                         } catch (JSONException e){
