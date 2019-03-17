@@ -8,6 +8,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -24,13 +26,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private TextView lbl_enter_city;
-    private EditText get_city;
     private Button fetch_data;
     String fetch_city_name;
     private ArrayList<WeatherData_model> weatherItems;
@@ -40,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout show_data_layout;
     private TextView show_city_name, show_main_temp, show_min_temp, show_max_temp,
             show_main_weather, show_description, show_humidity, show_cloud;
+    private AutoCompleteTextView get_city_name;
+    List<String> city_data;
+    ArrayAdapter<String> city_adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         lbl_enter_city = findViewById(R.id.lblEnterCity);
-        get_city = findViewById(R.id.get_city_name);
         fetch_data = findViewById(R.id.fetch_button);
         weatherItems = new ArrayList<>();
         show_city_name = findViewById(R.id.show_city_name);
@@ -61,10 +67,26 @@ public class MainActivity extends AppCompatActivity {
         show_data_layout = findViewById(R.id.show_data_layout);
         show_data_layout.setVisibility(View.INVISIBLE);
 
+        city_data = new ArrayList<String>();
+        try{
+            JSONArray jsonArray = new JSONArray(loadJSONFromAsset());
+            for (int i=0; i<jsonArray.length(); i++){
+                String get_city_name = jsonArray.getJSONObject(i).getString("name");
+                String get_country_name = jsonArray.getJSONObject(i).getString("country");
+                city_data.add(get_city_name + "," + get_country_name);
+            }
+            Log.i("total cities: ", String.valueOf(city_data.size()));
+        } catch (JSONException e){
+            e.printStackTrace();
+        }
+        city_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, city_data);
+        get_city_name = findViewById(R.id.get_city_name);
+        get_city_name.setAdapter(city_adapter);
+
         fetch_data.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fetch_city_name = get_city.getText().toString();
+                fetch_city_name = get_city_name.getText().toString();
                 Log.i("City", fetch_city_name);
 
                 runnable = new Runnable() {
@@ -82,6 +104,21 @@ public class MainActivity extends AppCompatActivity {
                 inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
             }
         });
+    }
+
+    public String loadJSONFromAsset(){
+        String json = null;
+        try{
+            InputStream inputStream = getAssets().open("city_list.json");
+            int size = inputStream.available();
+            byte[] buffer = new byte[size];
+            inputStream.read(buffer);
+            inputStream.close();
+            json = new String(buffer, "UTF-8");
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        return json;
     }
 
     public void get_weather_data(){

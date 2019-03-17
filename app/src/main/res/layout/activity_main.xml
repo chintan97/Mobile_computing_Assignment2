@@ -21,7 +21,7 @@
             android:textColor="@color/colorBlack"
             android:textSize="20dp"/>
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/get_city_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
