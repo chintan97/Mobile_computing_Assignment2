@@ -37,7 +37,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="15dp"
         android:text="@string/btn_fetch"
-        android:background="@color/colorPrimary"/>
+        android:background="#5FCADB"/>
 
     <LinearLayout
         android:id="@+id/layout_show_error"
@@ -159,5 +159,4 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-
 </LinearLayout>

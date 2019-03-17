@@ -93,6 +93,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 fetch_city_name = get_city_name.getText().toString();
+                if (fetch_city_name.isEmpty()){
+                    Toast.makeText(getApplicationContext(), "Please enter city name!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Log.i("City", fetch_city_name);
 
                 runnable = new Runnable() {
