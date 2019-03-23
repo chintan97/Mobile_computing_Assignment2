@@ -50,9 +50,9 @@
             android:id="@+id/show_error"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30dp"
+            android:textSize="25dp"
             android:textStyle="bold"
-            android:text="City not found!"/>
+            android:text="City not found! Try selecting cities from suggestions"/>
     </LinearLayout>
 
     <LinearLayout

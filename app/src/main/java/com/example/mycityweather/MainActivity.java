@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e){
             e.printStackTrace();
         }
-        return json;
+        return json;   // return file data
     }
 
     public void get_weather_data(){
