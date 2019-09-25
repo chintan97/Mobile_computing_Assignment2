@@ -12,3 +12,7 @@ I have used json file provided by Openweathermap API to improve easiness of the 
 For some cities, the AutoCompleteTextView may return some city and country name as same. In json, they are different by considering longitudes and latitudes. The issue is explained in the report submitted.
 
 No extra file is required to add with the code submitted to run the application. 
+
+<p align="center"> 
+<img alt="App UI" src="https://github.com/chintan97/Mobile_computing_Assignment2/blob/master/App%20SS.png">
+</p>
